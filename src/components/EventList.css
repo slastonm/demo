@@ -1,0 +1,62 @@
+.recent-updates {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+.recent-updates h2 {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color: #ffdca0;
+  margin-bottom: 20px;
+}
+
+.avatars img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #999;
+}
+
+.update-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.update-list li {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  border-left: 4px solid #ffdca0;
+  padding-left: 10px;
+}
+
+.update-list strong {
+  color: #f0c060;
+}
+
+.date {
+  font-weight: bold;
+}
+
+.date {
+    margin-right: 0.5em;
+    font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+  }
+}

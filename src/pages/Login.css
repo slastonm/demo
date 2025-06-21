@@ -1,0 +1,60 @@
+h2 {
+  margin: 0 0 10px;
+  color: #ecdbc2;
+  font-size: -100%;
+  font-family: "Roboto", serif;
+  text-align: center;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #1f1f1f;
+}
+
+form {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#authContainer {
+  background-color: #ecdbc2;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px #aea28f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register-block {
+  margin-top: 20px;
+  color: black;
+}
+#authContainer input {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+#authContainer button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #806c4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#authContainer button:hover {
+  background-color: #5c4a3c;
+}

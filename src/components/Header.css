@@ -1,0 +1,53 @@
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.auth {
+  display: flex;
+  align-items: center;
+  column-gap: 25px;
+}
+.auth h2 {
+  margin: 0;
+}
+.top-nav .auth button {
+  background: transparent;
+  border: 1px solid #aaa;
+  color: #eee;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.top-nav .auth button:hover {
+  background-color: #444;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+.buttons button {
+  background: rgba(0, 0, 0, 0.6);
+  color: #f3f3f3;
+  border: 1px solid #777;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.buttons button:hover {
+  background: #5c4a3c;
+}
+
+a {
+  color: white;
+}

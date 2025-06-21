@@ -1,0 +1,33 @@
+.background {
+  background-color: bisque;
+}
+
+h1 {
+  margin: 0 0 10px;
+  color: #080808;
+  font-size: -100%;
+  font-family: "Roboto", serif;
+  text-align: center;
+}
+
+.back {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.back a {
+  background: rgba(0, 0, 0, 0.6);
+  color: rgb(255, 255, 255);
+  border: 1px solid #1d1d1c;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back a:hover {
+  background: #ffffff;
+}
