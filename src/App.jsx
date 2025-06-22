@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PriorityEvent from "./pages/PriorityEvent";
 
 import {
   BrowserRouter as Router,
@@ -71,6 +72,16 @@ const AppLayout = () => {
             </PrivateRouter>
           }
         ></Route>
+        <Route
+          path="/priorityq"
+          element={
+            <PrivateRouter>
+              <PriorityEvent></PriorityEvent>
+            </PrivateRouter>
+          }
+        >
+          {" "}
+        </Route>
         <Route path="/*" element={<NotFonund></NotFonund>}></Route>
       </Routes>
     </>

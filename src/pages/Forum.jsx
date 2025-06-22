@@ -8,11 +8,25 @@ const Forum = () => {
   const [posts, setPosts] = useState([]);
   const [editId, setEditId] = useState(null);
   const [editContent, setEditContent] = useState("");
+  const [offset, setOffset] = useState(0);
+  const limit = 5;
+  const [analysis, setAnalysis] = useState([]);
+  const loadGeneratedPosts = async () => {
+    try {
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_API_URL
+        }/forum/slice-generated?offset=${offset}&limit=${limit}`
+      );
+      const data = await res.json();
+      setPosts((prev) => [...prev, ...data.posts]);
+      setOffset((prev) => prev + limit);
+    } catch (err) {
+      console.log("Error loading generated posts:", err);
+    }
+  };
+
   useEffect(() => {
-    // const stored = localStorage.getItem("posts");
-    // if (stored) {
-    //   setPosts(JSON.parse(stored));
-    // }
     const fetchPosts = async () => {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
       try {
@@ -126,47 +140,6 @@ const Forum = () => {
     setPreview(media);
   };
 
-  // const createPost = () => {
-  //   const postText = postInputRef.current.value.trim();
-  //   const file = mediaInputRef.current.files[0];
-  //   if (!postText && !file && editId === null) return;
-
-  //   const fileType = file?.type;
-  //   const url = file ? URL.createObjectURL(file) : null;
-  //   let mediaType = null;
-
-  //   if (fileType?.startsWith("image/")) mediaType = "image";
-  //   else if (fileType?.startsWith("video/")) mediaType = "video";
-  //   else if (fileType?.startsWith("audio/")) mediaType = "audio";
-
-  //   if (editId !== null) {
-  //     setPosts(
-  //       posts.map((post) =>
-  //         post.id === editId
-  //           ? {
-  //               ...post,
-  //               text: postText,
-  //               fileType: file ? mediaType : post.fileType,
-  //               fileUrl: file ? url : post.fileUrl,
-  //             }
-  //           : post
-  //       )
-  //     );
-  //     setEditId(null);
-  //   } else {
-  //     const newPost = {
-  //       id: Date.now(),
-  //       text: postText,
-  //       fileType: mediaType,
-  //       fileUrl: url,
-  //     };
-  //     setPosts([newPost, ...posts]);
-  //   }
-  //   postInputRef.current.value = "";
-  //   mediaInputRef.current.value = "";
-  //   setPreview(null);
-  // };
-
   const handleEdit = (postId) => {
     const post = posts.find((p) => p.id === postId);
     if (post) {
@@ -180,18 +153,16 @@ const Forum = () => {
     await deletePost(postId);
   };
 
-  // const renderMedia = (post) => {
-  //   if (!post.fileType || !post.fileUrl) return null;
-  //   if (post.fileType === "image") {
-  //     return <img src={post.fileUrl} alt="media" />;
-  //   }
-  //   if (post.fileType === "video") {
-  //     return <video src={post.fileUrl} controls />;
-  //   }
-  //   if (post.fileType === "audio") {
-  //     return <audio src={post.fileUrl} controls />;
-  //   }
-  // };
+  const analyzePosts = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/forum/analyze`);
+      const data = await res.json();
+      setAnalysis(data.analysis || []);
+    } catch (err) {
+      console.error("Analyze error:", err);
+    }
+  };
+
   return (
     <div>
       <section className="post-writing">
@@ -236,6 +207,25 @@ const Forum = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={loadGeneratedPosts}>Load more generated posts</button>
+        <button onClick={analyzePosts}>Analyze posts</button>
+      </div>
+      <div>
+        {analysis.length > 0 && (
+          <div className="analysis-results" style={{ marginTop: "1rem" }}>
+            <h3>Результат аналізу:</h3>
+            <ul>
+              {analysis.map((result, idx) => (
+                <li key={idx}>
+                  {result.id ? `ID: ${result.id},` : ""} слово:{" "}
+                  <strong>{result.word}</strong> — кількість: {result.count}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

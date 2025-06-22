@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./EventList.css";
 import Picture1 from "../assets/pictures/26 event/Aleph_Icon.webp";
 import Picture2 from "../assets/pictures/26 event/Aleph cube.png";
@@ -64,76 +64,7 @@ class PriorityQueue {
   }
 }
 
-  const events = [
-    {
-      start: "2025.05.29",
-      end: "2025.07.03",
-      title: "The main part of the “Folie et Déraison” event is now open.",
-      priority: 10,
-    },
-    {
-      start: "2025.05.29",
-      end: "2025.06.19",
-      title: "Character banner “A Writing Writer Written” available.",
-      priority: 7,
-    },
-    {
-      start: "2025.05.29",
-      end: "2025.06.19",
-      title: "“Dialogues behind bars |” is now open.",
-      priority: 6,
-    },
-    {
-      start: "2025.05.29",
-      end: "2025.06.19",
-      title: "“Ruinas Gloriosas y Directices de Metáforas” is open.",
-      priority: 5,
-    },
-    {
-      start: "2025.06.03",
-      end: "2025.07.03",
-      title: "“Mane Bulletin” event is open.",
-      priority: 6,
-    },
-    {
-      start: "2025.06.05",
-      end: "2025.06.19",
-      title: "“Bette: The last film” event is open.",
-      priority: 9,
-    },
-    {
-      start: "2025.06.19",
-      end: "2025.07.03",
-      title: "Character banner “The Shattered Product” available.",
-      priority: 7,
-    },
-    {
-      start: "2025.06.19",
-      end: null,
-      title: "“The Answering Machine, The Butterfly and The Literaly Critic” is open.",
-      priority: 4,
-      },
-    {
-      start: "2025.06.20",
-      end: "2025.07.03",
-      title: "The rerun of event “Farewell, Rayashki” is open.",
-      priority: 6,
-    },
-    {
-      start: "2025.06.28",
-      end: "2025.07.03",
-      title: "Event “Labs Snapshots” is open.",
-      priority: 3,
-    },
-    {
-      start: "2025.06.19",
-      end: "2025.07.03",
-      title: "“Dialogues behind bars ||” is open.",
-      priority: 8,
-    },
-  ];
-
-  const formatDateDiff = (startStr, endStr) => {
+const formatDateDiff = (startStr, endStr) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const start = new Date(startStr);
@@ -177,22 +108,41 @@ const EventItem = ({ event }) => {
 };
 
 const EventList = () => {
-  const pq = new PriorityQueue();
-  events.forEach((event) => pq.enqueue(event, event.priority));
-  const sortedEvents = pq.getAllSortedBy("highest");
+  const [sortedEvents, setSortedEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/generator/events?duration=5"
+        );
+        const data = await res.json();
+
+        const pq = new PriorityQueue();
+        data.collected.forEach((event) => pq.enqueue(event, event.priority));
+        const sorted = pq.getAllSortedBy("highest");
+        setSortedEvents(sorted);
+      } catch (error) {
+        console.error("Failed to load events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <section className="recent-updates">
       <div className="recent-updates">
         <h2>Recently Updated</h2>
         <div className="avatars">
-          <img src={Picture1}/>
-          <img src={Picture2}/>
-          <img src= {Picture3}/>
+          <img src={Picture1} alt="Avatar 1" />
+          <img src={Picture2} alt="Avatar 2" />
+          <img src={Picture3} alt="Avatar 3" />
         </div>
 
         <ul>
           {sortedEvents.map((event, index) => (
-            <EventItem key={index} event={event}></EventItem>
+            <EventItem key={index} event={event} />
           ))}
         </ul>
       </div>
