@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRouter from "./components/PrivateRouter";
+import Chat from "./pages/Chat";
 
 import backgroundHome from "./assets/pictures/26 event/background.jpg";
 import backgroundPull from "./assets/pictures/26 event/pull.jpg";
@@ -53,6 +54,7 @@ const AppLayout = () => {
       <Routes>
         <Route path="/" element={<Main></Main>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/chat" element={<Chat></Chat>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route
           path="/Forum"

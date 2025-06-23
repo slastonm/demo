@@ -3,12 +3,14 @@ import React, { useState } from "react";
 const FileInfo = () => {
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchFileInfo = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/analyze/analyze-file");
+      const res = await fetch(`${API_URL}/analyze/analyze-file`);
       const data = await res.json();
+      console.log(data);
       setInfo(data);
     } catch (err) {
       console.error("Failed to load file info:", err);
@@ -34,19 +36,14 @@ const FileInfo = () => {
           ) : (
             <>
               <p>
-                <strong>Total lines:</strong> {info.lines}
+                <strong>Total lines:</strong> {info.lineCount}
               </p>
               <p>
-                <strong>Total words:</strong> {info.totalWords}
+                <strong>Total words:</strong> {info.wordCount}
               </p>
-              <h4>Preview (first 10 lines):</h4>
-              <ul>
-                {info.results.map((line) => (
-                  <li key={line.line}>
-                    Line {line.line}: {line.words} words
-                  </li>
-                ))}
-              </ul>
+              <p>
+                <strong>Total char:</strong> {info.charCount}
+              </p>
             </>
           )}
         </div>

@@ -113,9 +113,8 @@ const EventList = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(
-          "http://localhost:5000/generator/events?duration=5"
-        );
+        const API_URL = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${API_URL}/generator/events?duration=5`);
         const data = await res.json();
 
         const pq = new PriorityQueue();

@@ -4,6 +4,8 @@ import Picture1 from "../assets/pictures/26 event/Aleph_Icon.webp";
 import Picture2 from "../assets/pictures/26 event/Aleph cube.png";
 import Picture3 from "../assets/pictures/26 event/Bette cube.png";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function PriorityEvent(props) {
   const [newEvent, setNewEvent] = useState({
     title: "",
@@ -14,9 +16,7 @@ function PriorityEvent(props) {
   const [mode, setMode] = useState("highest");
   const fetchEvent = async (selectedMode) => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/priority/peek?mode=${selectedMode}`
-      );
+      const res = await fetch(`${API_URL}/priority/peek?mode=${selectedMode}`);
       const data = await res.json();
       setEvent(data.item || null);
       setMode(selectedMode);
@@ -26,9 +26,7 @@ function PriorityEvent(props) {
   };
   const dequeueEvent = async () => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/priority/dequeue?mode=${mode}`
-      );
+      const res = await fetch(`${API_URL}/priority/dequeue?mode=${mode}`);
       const data = await res.json();
       setEvent(data.item || null);
     } catch (err) {
@@ -37,7 +35,7 @@ function PriorityEvent(props) {
   };
   const handleAddEvent = async () => {
     try {
-      const res = await fetch("http://localhost:5000/priority/enqueue", {
+      const res = await fetch(`${API_URL}/priority/enqueue`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

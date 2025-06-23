@@ -26,6 +26,9 @@ function Header(props) {
         <Link to="/priorityq">
           <button>Priority Events</button>
         </Link>
+        <Link to="/chat">
+          <button>Chat</button>
+        </Link>
       </section>
       <section className="auth">
         {isAuthenticated ? (
